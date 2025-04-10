@@ -81,16 +81,10 @@ st.markdown("### 選ばれた島:")
 st.markdown(f"*{current_date}の結果*")
 
 for i, island in enumerate(selected_islands, 1):
-    if island in single_person_islands:
-        if island in island_pairs:
-            st.markdown(f"{i}. {island} (1人) - 裏: {island_pairs[island]}")
-        else:
-            st.markdown(f"{i}. {island} (1人)")
+    if island in island_pairs:
+        st.markdown(f"{i}. {island} - 裏: {island_pairs[island]}")
     else:
-        if island in island_pairs:
-            st.markdown(f"{i}. {island} - 裏: {island_pairs[island]}")
-        else:
-            st.markdown(f"{i}. {island}")
+        st.markdown(f"{i}. {island}")
 
 # フッター
 st.markdown("---")
