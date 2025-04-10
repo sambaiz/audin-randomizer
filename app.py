@@ -11,14 +11,13 @@ islands = [
     "フェロー諸島", # 1人
     "リムリック", # 裏
     "オークニー", # 裏
-    "アイスランド", # 裏
-    "グリーンランド", # 裏
-    "アウター・ヘブリディーズ", # 裏
-    "アイラ島", # 裏
+    "アイスランド",
+    "グリーンランド",
+    "アウター・ヘブリディーズ",
+    "アイラ島",
     "ビュルネイ島", # 裏
     "ウェックスフォード", # 裏
     "フエゴ島",
-    "ケイスネス", # 裏
     "バフィン島" # 裏
 ]
 
@@ -35,13 +34,8 @@ single_person_islands = [
 back_islands = [
     "リムリック",
     "オークニー",
-    "アイスランド",
-    "グリーンランド",
-    "アウター・ヘブリディーズ",
-    "アイラ島",
     "ビュルネイ島",
     "ウェックスフォード",
-    "ケイスネス",
     "バフィン島"
 ]
 
@@ -53,11 +47,12 @@ island_pairs = {
     "スカイ島": "リムリック",
     "ロフォーテン": "オークニー",
     "マン島": "アイスランド",
-    "シェットランド諸島": "グリーンランド",
-    "フェロー諸島": "アウター・ヘブリディーズ",
-    "アイラ島": "ビュルネイ島",
-    "ウェックスフォード": "ケイスネス",
-    "フエゴ島": "バフィン島"
+    "シェットランド諸島": "ビュルネイ島",
+    "フェロー諸島": "バフィン島",
+    "アイラ島": "ウェックスフォード",
+    "アウター・ヘブリディーズ": "コーク",
+    "アイスランド": "ラブラドール島",
+    "グリーンランド": "ニューファンドランド",
 }
 
 # ページ設定
@@ -89,11 +84,11 @@ random.seed(current_date)
 # 1人の島を1つランダムに選択
 selected_single_island = random.choice(single_person_islands)
 
-# 残りの表の島から6つを選択（1人の島を除く）
+# 残りの表の島から5つを選択（1人の島を除く）
 remaining_front_islands = [island for island in front_islands if island != selected_single_island]
-selected_remaining_islands = random.sample(remaining_front_islands, 6)
+selected_remaining_islands = random.sample(remaining_front_islands, 5)
 
-# 結果を組み合わせる
+# 結果を組み合わせる（合計8つになるように）
 selected_islands = selected_remaining_islands + [selected_single_island, "フエゴ島"]
 
 # 結果を表示
