@@ -4,11 +4,11 @@ from datetime import datetime
 
 # 島のリスト
 islands = [
-    "スカイ島",
-    "ロフォーテン",
-    "マン島",
-    "シェットランド諸島",
-    "フェロー諸島",
+    "スカイ島",  # 1人
+    "ロフォーテン",  # 1人
+    "マン島", # 1人
+    "シェットランド諸島", # 1人
+    "フェロー諸島", # 1人
     "リムリック",
     "オークニー",
     "アイスランド",
@@ -20,6 +20,15 @@ islands = [
     "フエゴ島",
     "ケイスネス",
     "バフィン島"
+]
+
+# 1人の島のリスト
+single_person_islands = [
+    "スカイ島",
+    "ロフォーテン",
+    "マン島",
+    "シェットランド諸島",
+    "フェロー諸島"
 ]
 
 # ページ設定
@@ -36,8 +45,9 @@ st.markdown("---")
 # 説明文
 st.markdown("""
 このアプリは、オーディンの祝祭の島から8つの島をランダムに選びます。
-フエゴ島は必ず含まれます。
-同じ日付であれば、同じ結果が表示されます。
+- フエゴ島は必ず含まれます
+- 1人の島（スカイ島、ロフォーテン、マン島、シェットランド諸島、フェロー諸島）が少なくとも1つ含まれます
+- 同じ日付であれば、同じ結果が表示されます
 """)
 
 # 現在の日付を取得
@@ -49,17 +59,24 @@ random.seed(current_date)
 # フエゴ島を除いた島のリストを作成
 islands_without_fuego = [island for island in islands if island != "フエゴ島"]
 
-# 7つの島をランダムに選択
-selected_islands = random.sample(islands_without_fuego, 7)
+# 1人の島を1つランダムに選択
+selected_single_island = random.choice(single_person_islands)
 
-# フエゴ島を追加
-selected_islands.append("フエゴ島")
+# 残りの島から6つを選択（1人の島を除く）
+remaining_islands = [island for island in islands_without_fuego if island != selected_single_island]
+selected_remaining_islands = random.sample(remaining_islands, 6)
+
+# 結果を組み合わせる
+selected_islands = selected_remaining_islands + [selected_single_island, "フエゴ島"]
 
 # 結果を表示
 st.markdown("### 選ばれた島:")
 st.markdown(f"*{current_date}の結果*")
 for i, island in enumerate(selected_islands, 1):
-    st.markdown(f"{i}. {island}")
+    if island in single_person_islands:
+        st.markdown(f"{i}. {island} (1人)")
+    else:
+        st.markdown(f"{i}. {island}")
 
 # フッター
 st.markdown("---")
