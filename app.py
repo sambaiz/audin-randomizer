@@ -37,9 +37,6 @@ island_pairs = {
     "グリーンランド": "ニューファンドランド",
 }
 
-# 裏の島のリスト（island_pairsの値から生成）
-back_islands = list(island_pairs.values())
-
 # ページ設定
 st.set_page_config(
     page_title="オーディンの祝祭の島 ランダマイザ",
