@@ -86,6 +86,9 @@ selected_single_island = random.choice(single_person_islands)
 
 # 残りの表の島から5つを選択（1人の島を除く）
 remaining_front_islands = [island for island in front_islands if island != selected_single_island]
+if len(remaining_front_islands) < 5:
+    st.error("表の島の数が不足しています。")
+    st.stop()
 selected_remaining_islands = random.sample(remaining_front_islands, 5)
 
 # 結果を組み合わせる（合計8つになるように）
