@@ -1,5 +1,6 @@
 import streamlit as st
 import random
+from datetime import datetime
 
 # 島のリスト
 islands = [
@@ -36,20 +37,30 @@ st.markdown("---")
 st.markdown("""
 このアプリは、オーディンの祝祭の島から8つの島をランダムに選びます。
 フエゴ島は必ず含まれます。
+同じ日付であれば、同じ結果が表示されます。
 """)
 
-# ランダマイズボタン
-if st.button("島をランダマイズ", type="primary"):
-    # フエゴ島を除いた島のリストを作成
-    islands_without_fuego = [island for island in islands if island != "フエゴ島"]
-    
-    # 7つの島をランダムに選択
-    selected_islands = random.sample(islands_without_fuego, 7)
-    
-    # フエゴ島を追加
-    selected_islands.append("フエゴ島")
-    
-    # 結果を表示
-    st.markdown("### 選ばれた島:")
-    for i, island in enumerate(selected_islands, 1):
-        st.markdown(f"{i}. {island}")
+# 現在の日付を取得
+current_date = datetime.now().strftime("%Y-%m-%d")
+
+# 日付をシード値として使用
+random.seed(current_date)
+
+# フエゴ島を除いた島のリストを作成
+islands_without_fuego = [island for island in islands if island != "フエゴ島"]
+
+# 7つの島をランダムに選択
+selected_islands = random.sample(islands_without_fuego, 7)
+
+# フエゴ島を追加
+selected_islands.append("フエゴ島")
+
+# 結果を表示
+st.markdown("### 選ばれた島:")
+st.markdown(f"*{current_date}の結果*")
+for i, island in enumerate(selected_islands, 1):
+    st.markdown(f"{i}. {island}")
+
+# フッター
+st.markdown("---")
+st.markdown("© 2024 オーディンの祝祭の島 ランダマイザ")
