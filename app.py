@@ -1,6 +1,7 @@
 import streamlit as st
 import random
 from datetime import datetime
+import secrets
 
 # 1人の島のリスト
 single_person_islands = [
@@ -55,13 +56,19 @@ st.markdown("""
 - 1人の島（スカイ島、ロフォーテン、マン島、シェットランド諸島、フェロー諸島）が少なくとも1つ含まれます
 - 裏の島は選ばれませんが、対応する裏の島がある場合は表示されます
 - 同じ日付であれば、同じ結果が表示されます
+- シャッフルボタンをクリックすると、新しい結果が生成されます
 """)
 
-# 現在の日付を取得
-current_date = datetime.now().strftime("%Y-%m-%d")
+# クエリパラメータからシードを取得
+query_params = st.experimental_get_query_params()
+seed = query_params.get("seed", [None])[0]
 
-# 日付をシード値として使用
-random.seed(current_date)
+# シードが指定されていない場合はランダムなシードを生成
+if seed is None:
+    seed = secrets.token_hex(8)
+
+# シードをシード値として使用
+random.seed(seed)
 
 # 1人の島を1つランダムに選択
 selected_single_island = random.choice(single_person_islands)
@@ -78,13 +85,37 @@ selected_islands = selected_remaining_islands + [selected_single_island, "フエ
 
 # 結果を表示
 st.markdown("### 選ばれた島:")
-st.markdown(f"*{current_date}の結果*")
+st.markdown(f"*シード: {seed}*")
 
 for i, island in enumerate(selected_islands, 1):
     if island in island_pairs:
         st.markdown(f"{i}. {island} - 裏: {island_pairs[island]}")
     else:
         st.markdown(f"{i}. {island}")
+
+# 現在のURLを表示
+current_url = st.experimental_get_query_params()
+st.markdown("### 現在のURL:")
+url = f"https://audin-randomizer.streamlit.app/?seed={seed}"
+st.code(url, language="text")
+
+# URLをコピーするボタン
+if st.button("URLをコピー"):
+    st.markdown(f"""
+    <script>
+        navigator.clipboard.writeText("{url}");
+        alert("URLをクリップボードにコピーしました。");
+    </script>
+    """, unsafe_allow_html=True)
+
+# シャッフルボタン
+if st.button("シャッフル"):
+    # 新しいシードを生成
+    new_seed = secrets.token_hex(8)
+    # URLを更新
+    st.experimental_set_query_params(seed=new_seed)
+    # ページをリロード
+    st.experimental_rerun()
 
 # フッター
 st.markdown("---")
