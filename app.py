@@ -60,14 +60,15 @@ st.markdown("""
 """)
 
 # クエリパラメータからシードを取得
-query_params = st.experimental_get_query_params()
-seed = query_params.get("seed", [None])[0]
+query_params = st.query_params
+seed = query_params.get("seed", None)
 
 # シードが指定されていない場合はランダムなシードを生成
 if seed is None:
     seed = secrets.token_hex(8)
 
 # シードをシード値として使用
+st.write(f"seed: {seed}")
 random.seed(seed)
 
 # 1人の島を1つランダムに選択
@@ -94,7 +95,7 @@ for i, island in enumerate(selected_islands, 1):
         st.markdown(f"{i}. {island}")
 
 # 現在のURLを表示
-current_url = st.experimental_get_query_params()
+current_url = st.query_params
 st.markdown("### 現在のURL:")
 url = f"https://audin-randomizer.streamlit.app/?seed={seed}"
 st.code(url, language="text")
@@ -113,7 +114,7 @@ if st.button("シャッフル"):
     # 新しいシードを生成
     new_seed = secrets.token_hex(8)
     # URLを更新
-    st.experimental_set_query_params(seed=new_seed)
+    st.query_params["seed"] = new_seed
     # ページをリロード
     st.experimental_rerun()
 
