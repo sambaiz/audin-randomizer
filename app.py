@@ -40,7 +40,7 @@ island_pairs = {
 
 # ページ設定
 st.set_page_config(
-    page_title="オーディンの祝祭の島 ランダマイザ",
+    page_title="オーディンの祝祭の島 ランダマイザ v0.1",
     page_icon="🏝️",
     layout="centered"
 )
