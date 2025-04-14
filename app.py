@@ -116,7 +116,7 @@ if st.button("シャッフル"):
     # URLを更新
     st.query_params["seed"] = new_seed
     # ページをリロード
-    st.experimental_rerun()
+    st.rerun()
 
 # フッター
 st.markdown("---")
